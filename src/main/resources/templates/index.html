@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Discussion - Instructor</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img/chat.ico" media="screen"/>
+    <!--浏览器小图标-->
+    <link rel="Bookmark" href="img/chat.ico"/>
+    <!--收藏夹显示图标-->
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="css/stylesheet.css"/>
+    <link rel="stylesheet" href="css/discussion.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body class="ng-scope" ng-app="MyApp" ng-controller="AppCtrl">
+<div class="Container" ng-if="!user">
+    <div class="screen_bg">
+        <div class="login">
+            <h1>Login</h1>
+            <div>
+                <input type="text" name="username" ng-model="data.username" placeholder="username" required="required"
+                       maxlength="16"/>
+                <input type="password" name="password" ng-model="data.password" placeholder="password"
+                       required="required" maxlength="6"/>
+                <select ng-model="data.type" class="form-control login-type">
+                    <option value="0">Instructor</option>
+                    <option value="1">Beginner</option>
+                    <option value="2">Intermediate</option>
+                    <option value="3">Expert</option>
+                </select>
+                <div class="error btn-danger">{{data.errorMsg}}</div>
+                <button ng-click="login()" type="button" class="btn btn-primary btn-block btn-large">login in</button>
+            </div>
+            <br/>
+        </div>
+    </div>
+</div>
+<div class="Header" ng-if="user">
+    <nav class="navbar navbar-inverse top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse">
+                    <i class="fa fa-chevron-down faa-vertical animated"></i>
+                </a>
+                <a tabindex="0" class="navbar-brand faa-pulse faa-slow animated" data-toggle="popover"
+                   data-trigger="focus">
+                    <i><img src="img/chat.png" style="width: 32px; height: 32px;"/></i>
+                    <i class="fa fa-lg">D</i>
+                    <i class="fa fa-lg">i</i>
+                    <i class="fa fa-lg">s</i>
+                    <i class="fa fa-lg">c</i>
+                    <i class="fa fa-lg">u</i>
+                    <i class="fa fa-lg">s</i>
+                    <i class="fa fa-lg">s</i>
+                    <i class="fa fa-lg">i</i>
+                    <i class="fa fa-lg">o</i>
+                    <i class="fa fa-lg">n</i>
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a class="faa-parent animated-hover">
+                            <i class="fa fa-fw fa-lg fa-home faa-tada faa-fast"></i> Home
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="about" class="faa-parent animated-hover">
+                            <i class="fa fa-fw fa-lg fa-quote-left faa-tada faa-fast"></i> About Us
+                        </a>
+                    </li>
+                    <li>
+                        <a class="faa-parent animated-hover">
+                            <i class="fa fa-fw fa-lg fa-th faa-tada faa-fast"></i> Courses
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a  class="dropdown-toggle" data-toggle="dropdown">
+									<span class="user-avatar pull-left" style="margin-right:8px; margin-top:-5px;">
+                                        				<img ng-src="{{user.avatar}}"
+                                                             class="img-responsive img-circle"
+                                                             alt="welcome" style="width: 30px;  height: 30px;"/>
+                                    				</span>
+                            <span class="user-name">
+                                        				{{user.username}}
+                                    				</span>
+                            <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="navbar-content">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <img ng-src="{{user.avatar}}"
+                                                 alt="Alternate Text" class="img-responsive"/>
+                                            <p class="text-center small">
+                                            </p>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <span>{{user.username}}</span>
+                                            <p class="text-muted small">
+                                                {{user.username+"@uwlax.edu"}}
+                                            </p>
+                                            <div class="divider">
+                                            </div>
+                                            <div class="profile">
+                                                <a ui-sref="profile" class="btn btn-default btn-xs" title="Profile"><i
+                                                        class=" glyphicon glyphicon-user" aria-hidden="true"></i>
+                                                    Profile&nbsp;</a>
+                                                <a  ui-sref="help" class="btn btn-default btn-xs" title="Help"><i
+                                                        class="glyphicon glyphicon-question-sign"
+                                                        aria-hidden="true"></i> Help&nbsp;</a>
+                                                <a  class="btn btn-default btn-xs addD" data-toggle="modal"
+                                                   data-target="#addD" title="Add a discussion" ng-if="!user.type"><i
+                                                        class="glyphicon glyphicon-plus" aria-hidden="true"></i> Add a
+                                                    Discussion&nbsp;</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="navbar-footer">
+                                    <div class="navbar-footer-content">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="profile">
+                                                    <a ng-click="logout()"
+                                                       class="btn btn-default btn-sm pull-right"><i
+                                                            class="glyphicon glyphicon-off" aria-hidden="true"></i> Sign
+                                                        Out &nbsp;</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="Container" ng-if="user">
+    <div id="wrapper" class="active">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul id="sidebar_menu" class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a id="menu-toggle">Course<span id="main_icon" class="glyphicon glyphicon-align-justify"></span></a>
+                </li>
+                <script>
+                    $("#menu-toggle").click(function (e) {
+                        e.preventDefault();
+                        $("#wrapper").toggleClass("active");
+                    });
+                </script>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" style="width: 230px;" class="form-control"
+                           placeholder="Enter Course Name / Discussion"/>
+                </div>
+                <button class="btn btn-default" style="background: #5C4383; color: #E6E6E6; border-color: #5C4383;">
+                    Submit
+                </button>
+            </form>
+            <ul class="sidebar-nav" id="sidebar">
+                <li ng-repeat="(c,course) in user.course" ng-class="data.currentCourse == course.normalizedName?'active':''"  ng-click="selectCourse(course.normalizedName)">
+                    <a ui-sref="discussion">{{course.courseName}}<span class="sub_icon glyphicon glyphicon-link"></span></a>
+                </li>
+            </ul>
+        </div>
+        <!--add-->
+        <div id="addD" class="modal fade discussion" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title">Add Discussion</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" ng-model="data.discussionTopic" class="form-control" placeholder="Enter Topic"/>
+                        <div class="input-group image-preview">
+                            <input type="text" class="form-control image-preview-filename" disabled="disabled" />
+                            <!-- don't give a name === doesn't send on POST/GET -->
+                            <span class="input-group-btn">
+			                    <!-- image-preview-clear button -->
+			                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+			                        <span class="glyphicon glyphicon-remove"></span> Clear
+							</button>
+                                <!-- image-preview-input -->
+							<div class="btn btn-default image-preview-input">
+								<span class="glyphicon glyphicon-folder-open"></span>
+								<span class="image-preview-input-title">Browse</span>
+								<input type="file" onchange="angular.element(this).scope().loadImage(this.files)" accept="image/png, image/jpeg, image/gif" name="input-file-preview" />
+                                <!-- rename it -->
+							</div>
+							</span>
+                        </div>
+                        <textarea ng-model="data.discussionContent" class="form-control" placeholder="Enter Discussion Content"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" ng-click="addDiscussion()" id="up" class="btn btn-warning" data-dismiss="modal">Add</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page content -->
+            <div ui-view="">
+
+            </div>
+    </div>
+</div>
+
+<div class="Footer"></div>
+
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("active");
+    });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    $(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="https://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU"></script>
+<script src="js/course.js"></script>
+</body>
+</html>

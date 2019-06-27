@@ -1,0 +1,145 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--<meta charset="UTF-8">-->
+<!--<title>Discussion - discussion</title>-->
+<!--<link rel="shortcut icon" type="image/x-icon" href="img/chat.ico" media="screen" />-->
+<!--&lt;!&ndash;浏览器小图标&ndash;&gt;-->
+<!--<link rel="Bookmark" href="img/chat.ico" />-->
+<!--&lt;!&ndash;收藏夹显示图标&ndash;&gt;-->
+<!--&lt;!&ndash; 最新版本的 Bootstrap 核心 CSS 文件 &ndash;&gt;-->
+<!--<link rel="stylesheet" href="css/stylesheet.css" />-->
+<!--<link rel="stylesheet" href="css/discussion.css" />-->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">-->
+<!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+<!--<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>-->
+<!--<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>-->
+<!--<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<!--</head>-->
+
+<!--<body ;">-->
+<div style="text-align: left;" class="mainbody container-fluid">
+	<div style="padding-top:20px; margin-top:50px"> </div>
+	<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" style="margin-left: 12%;">
+		<!-- Sample post content with comments. -->
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h4><a href="#" style="text-decoration:none;" class="post-title"><strong>{{data.currentDiscussion.topic}}</strong></a></h4>
+				<small><a href="#" style="text-decoration:none; color:grey;">
+					<i><i class="fa fa-clock-o" aria-hidden="true"></i> {{data.currentDiscussion.date  | date:'yyyy-MM-dd HH:mm:ss'}}</i>
+				</a></small>
+				<span>
+                        <div class="navbar-right">
+                            <div class="dropdown">
+								<button class="btn btn-link btn-xs dropdown-toggle nounderline" type="button" id="dd1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+			                                    <i class="fa fa-cog" aria-hidden="true"></i>
+			                                    <span class="caret"></span>
+										</button>
+								<ul class="dropdown-menu" aria-labelledby="dd1" style="float: right;">
+									<li>
+										<a  class="add" data-toggle="modal" data-target="#add" data-uid="1"><i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add Entry</a>
+									</li>
+									<li role="separator" class="divider" ng-if="data.currentDiscussion.user.username==user.username"></li>
+									<li>
+										<a  ng-if="data.currentDiscussion.user.username==user.username" class="delete" data-toggle="modal" data-target="#delete" data-uid="1" ng-click="deleteDiscussion()"><i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete Discussion</a>
+									</li>
+									<li>
+										<a  ng-if="data.currentDiscussion.user.username==user.username" class="delete" data-toggle="modal" data-target="#delete" data-uid="1" ng-click="deleteComment"><i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete Comment</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</span>
+				<hr>
+				<div class="post-content row">
+					<div class="col-md-2 user block-center center">
+						<a href="#">
+							<img class="media-object img-circle" ng-src="{{data.currentDiscussion.user.avatar}} "width="50px" height="50px" style="margin-left:18px; margin-top:-5px;">
+						</a>
+						<a href="# " class="purple" style="margin-left: -8px"><h4> {{data.currentDiscussion.user.username}}</h4></a>
+					</div>
+					<div class="col-md-8">
+						<p>{{data.currentDiscussion.content}} </p>
+						<img class="img-responsive" ng-src="{{'images/'+data.currentDiscussion.img}}">
+					</div>
+				</div>
+				<hr>
+				<div>
+					<div class="pull-right btn-group-xs">
+						<a class="btn btn-default btn-xs"><i class="fa fa-heart" aria-hidden="true"></i> Like</a>
+						<a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reshare</a>
+						<a href="#myComment" class="btn btn-default btn-xs"><i class="fa fa-comment" aria-hidden="true"></i> Comment</a>
+					</div>
+					<div class="pull-left">
+						<p class="text-muted" style="margin-left:5px;"><i class="fa fa-globe" aria-hidden="true"></i> Public</p>
+					</div>
+					<br>
+				</div>
+				<hr>
+				<div>
+					<div class="post-content" ng-repeat="comment in data.comments">
+						<div class="panel-default" style="border: 1px solid #E6E6E6;">
+							<div class="panel-body">
+								<div class="pull-left">
+									<a href="#">
+										<img class="media-object img-circle" ng-src="{{comment.user.avatar}}" width="35px" height="35px" style="margin-right:8px; margin-top:-5px;" />
+									</a>
+								</div>
+								<h4><a href="#" style="text-decoration:none;"><strong>{{comment.user.username}}</strong></a></h4>
+
+								<div class="dropdown pull-right">
+									<button ng-if="user.type==0||comment.user.username==user.username" class="btn btn-link btn-xs dropdown-toggle nounderline" type="button" id="dd2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										<i class="fa fa-cog" aria-hidden="true"></i>
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dd2" style="float: right;">
+										<li>
+											<a ng-click="deleteDiscussion()" class="delete" data-toggle="modal" data-target="#delete" data-uid="1" ng-click="deleteDiscussion()"><i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete</a>
+										</li>
+									</ul>
+								</div>
+								<hr>
+								<div class="post-content">
+									{{comment.content}}
+									<br><small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o" aria-hidden="true"></i>{{comment.date  | date:'yyyy-MM-dd HH:mm:ss'}} </i></a></small></small>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr>
+				</div>
+			</div>
+		</div>
+		<!--Your comment-->
+		<div class="panel panel-default" id="myComment">
+			<div class="panel-body">
+				<div class="media">
+					<div class="pull-left">
+						<a href="#">
+							<img class="media-object img-circle" ng-src="{{user.avatar}}" width="50px" height="50px">
+						</a>
+					</div>
+					<div class="media-body">
+						<textarea class="form-control" ng-model="data.replyContent" rows="2" placeholder="Start a conversation..."></textarea>
+						<button class="btn btn-default pull-right" ng-click="reply()" style="margin-top: 10px">submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<script>
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    $(function() {
+        $('[data-toggle="popover"]').popover()
+    })
+</script>
+<!--</body>-->
+
+<!--</html>-->

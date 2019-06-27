@@ -1,0 +1,53 @@
+<div style="text-align: left;" class="mainbody container-fluid">
+	<div style="padding-top:20px;  margin-top: 50px"></div>
+	<div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="media">
+					<div align="center">
+						<img class="thumbnail img-responsive" ng-src="{{user.avatar}}" width="300px" height="300px">
+					</div>
+					<div class="media-body">
+						<hr>
+						<h3><strong>Bio</strong></h3>
+						<p>{{user.username}}</p>
+						<hr>
+						<h3><strong>Location</strong></h3>
+						<p>uwlax</p>
+						<hr>
+						<h3><strong>Gender</strong></h3>
+						<p>Male</p>
+						<hr>
+						<h3><strong>Birthday</strong></h3>
+						<p>January 01 1901</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+							<span>
+                        <h1 class="panel-title pull-left" style="font-size:30px;">{{user.username}} <small>{{user.username+"@uwlax.edu"}}</small> <i class="fa fa-check text-success" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="'{{user.username}}' is sharing with you"></i></h1>
+                    			</span>
+				<br><br>
+				<i class="fa fa-tags" aria-hidden="true"></i>
+				<a href="/tags/diaspora" class="tag">#Java</a>
+				<a href="/tags/hashtag" class="tag">#C#</a>
+				<a href="/tags/caturday" class="tag">#CS</a>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h2>Registered Courses</h2>
+				<hr />
+				<table class="table table-striped">
+					<tr ng-repeat="(c,course) in user.course">
+						<td><h4 class="purple">{{course.courseName}}</h4></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
